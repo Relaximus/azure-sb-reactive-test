@@ -13,13 +13,18 @@ public class Config {
     @Value("${connection-string}")
     private String CONNECTION_STRING;
 
+    @Value("${topic}")
+    private String topic = "reactor";
+    @Value("${subscription}")
+    private String subscriptionName = "test";
+
     @Bean
     public ServiceBusReceiverAsyncClient receiverClient() {
         return new ServiceBusClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .receiver()
-                .topicName("reactor")
-                .subscriptionName("test")
+                .topicName(topic)
+                .subscriptionName(subscriptionName)
                 .buildAsyncClient();
     }
 
@@ -28,7 +33,7 @@ public class Config {
         return new ServiceBusClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .sender()
-                .topicName("reactor")
+                .topicName(topic)
                 .buildAsyncClient();
     }
 
